@@ -1,15 +1,15 @@
 require('dotenv').config();
 const express = require('express');
 const layouts = require('express-ejs-layouts');
+const axios = require('axios'); 
 const app = express();
 const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('./config/ppConfig');
 const isLoggedIn = require('./middleware/isLoggedIn');
-
 const SECRET_SESSION = process.env.SECRET_SESSION;
 
-
+console.log(SECRET_SESSION);
 app.set('view engine', 'ejs');
 
 app.use(require('morgan')('dev'));
@@ -48,6 +48,24 @@ app.use('/auth', require('./controllers/auth'));
 app.get('/profile', isLoggedIn, (req, res) => {
   const { id, name, email } = req.user.get(); 
   res.render('profile', { id, name, email });
+});
+
+app.get('/anime', (req, res) => {
+  const options = {
+    method: 'GET',
+    url: 'https://animenewsnetwork.p.rapidapi.com/reports.xml',
+    params: {id: '155', nskip: '50', nlist: '50'},
+    headers: {
+      'x-rapidapi-key': 'fc385c185cmsh10989337c246894p136c8bjsnc38207942000',
+      'x-rapidapi-host': 'animenewsnetwork.p.rapidapi.com'
+    }
+  };
+  
+  axios.request(options).then(function (response) {
+    console.log(response.data);
+  }).catch(function (error) {
+    console.error(error);
+  });
 });
 
 
