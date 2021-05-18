@@ -1,0 +1,9 @@
+<h2>A list of all your favorite animes</h2>
+
+<h3>Choose your Anime</h3>
+
+<ul>
+    <% for (key in favorite) { %>
+        <li><%= key %>: <%= favorite[key] %></li>
+    <% } %>
+</ul>

@@ -34,7 +34,6 @@ app.use((req, res, next) => {
   next();
 });
 
-
 app.get('/', (req, res) => {
   res.render('index');
 });
@@ -51,23 +50,34 @@ app.get('/profile', isLoggedIn, (req, res) => {
 });
 
 app.get('/anime', (req, res) => {
-  const options = {
-    method: 'GET',
-    url: 'https://animenewsnetwork.p.rapidapi.com/reports.xml',
-    params: {id: '155', nskip: '50', nlist: '50'},
-    headers: {
-      'x-rapidapi-key': 'fc385c185cmsh10989337c246894p136c8bjsnc38207942000',
-      'x-rapidapi-host': 'animenewsnetwork.p.rapidapi.com'
-    }
-  };
-  
-  axios.request(options).then(function (response) {
-    console.log(response.data);
-  }).catch(function (error) {
-    console.error(error);
-  });
-});
+  axios.get('https://ghibliapi.herokuapp.com/films')
+    .then(function(response) {
+      const promises = [];
 
+      response.data.forEach(anime => {
+        promises.push(new Promise((resolve, reject) => {
+          axios.get(`http://www.omdbapi.com/?apikey=${process.env.API_KEY}&t=${encodeURI(anime.title)}`)
+            .then(function(response) {
+              resolve({
+                ...anime,
+                ...response.data,
+              });
+            })
+            .catch(function(error) {
+              reject(error);
+            });
+        }));
+      }); 
+
+      Promise.all(promises).then(animes => {
+        res.render('animelist', { animes });
+      });
+    }).catch(function(error) {
+      console.error(error);
+    });
+
+    
+});
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {
