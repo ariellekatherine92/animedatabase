@@ -34,22 +34,13 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/', (req, res) => {
-  res.render('index');
-});
-
-// app.get('/profile', (req, res) => {
-//   res.render('profile');
+// app.get('/', (req, res) => {
+//   res.render('index');
 // });
 
 app.use('/auth', require('./controllers/auth'));
 
-app.get('/profile', isLoggedIn, (req, res) => {
-  const { id, name, email } = req.user.get(); 
-  res.render('profile', { id, name, email });
-});
-
-app.get('/anime', (req, res) => {
+app.get('/', (req, res) => {
   axios.get('https://ghibliapi.herokuapp.com/films')
     .then(function(response) {
       const promises = [];
@@ -74,9 +65,18 @@ app.get('/anime', (req, res) => {
       });
     }).catch(function(error) {
       console.error(error);
-    });
+    });    
+});
 
-    
+app.get('/anime/:id', (req, res) => {
+  axios.get(`http://www.omdbapi.com/?apikey=${process.env.API_KEY}&i=${req.params.id}`)
+    .then(resp => {
+      console.log(resp.data);
+      res.render('animedetails', { details: resp.data });
+    })
+    .catch(error => {
+      console.error(error);
+    });
 });
 
 const PORT = process.env.PORT || 3000;

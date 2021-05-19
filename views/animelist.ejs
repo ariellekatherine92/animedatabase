@@ -1,16 +1,11 @@
-<h2>Animes</h2>
-
-<h3>Choose your Anime</h3>
-
 <div class="animes-container">
     <% animes.forEach(anime => { %>
-        <% console.log(anime) %>
-        <div class="anime-wrapper">
+        <a class="anime-wrapper" href="anime/<%=anime.imdbID%>">
             <h4><%=anime.title%></h4>
             <div class="anime-poster">
                 <img src=<%=anime.Poster%> alt=<%=anime.title%> />
             </div>
             <span><%=anime.Year%></span>
-        </div>
+        </a>
     <% }) %>
 </div>
