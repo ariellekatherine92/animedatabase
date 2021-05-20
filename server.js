@@ -7,10 +7,15 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('./config/ppConfig');
 const isLoggedIn = require('./middleware/isLoggedIn');
-const SECRET_SESSION = process.env.SECRET_SESSION;
+const db = require('./models');
 
+const SECRET_SESSION = process.env.SECRET_SESSION;
 console.log(SECRET_SESSION);
 app.set('view engine', 'ejs');
+
+
+const methodOverride = require('method-override');
+app.use(methodOverride('_method'));
 
 app.use(require('morgan')('dev'));
 app.use(express.urlencoded({ extended: false }));
@@ -68,6 +73,8 @@ app.get('/', (req, res) => {
     });    
 });
 
+
+
 app.get('/anime/:id', (req, res) => {
   axios.get(`http://www.omdbapi.com/?apikey=${process.env.API_KEY}&i=${req.params.id}`)
     .then(resp => {
@@ -78,6 +85,35 @@ app.get('/anime/:id', (req, res) => {
       console.error(error);
     });
 });
+
+app.post('/favorites', (req, res) => {
+  console.log(req.body)
+  db.favorites.create({
+    genre: req.body.genre,
+    ratings: req.body.rated,
+    name: req.body.title
+  })
+  .then(results => {
+    res.redirect('/favorites')
+  })
+  .catch(error => {
+    console.error(error);
+  })
+  // res.send('this should work')
+  })
+
+  app.get('/favorites', (req, res) => {
+    db.favorites.findAll().then((results) => {
+      // res.redirect
+      // console.log(results)
+      res.render('favorites', {favorites: results})
+    })
+  });
+
+  app.delete('/favorites', (req, res) => {
+    db.favorites.destroy
+      console.log(req.params.id)
+  })
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {

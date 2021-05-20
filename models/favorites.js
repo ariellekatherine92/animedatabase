@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   };
   favorites.init({
     genre: DataTypes.STRING,
-    ratings: DataTypes.INTEGER,
+    ratings: DataTypes.STRING,
     name: DataTypes.STRING
   }, {
     sequelize,

@@ -12,7 +12,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       ratings: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       name: {
         type: Sequelize.STRING
