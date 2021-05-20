@@ -110,10 +110,43 @@ app.post('/favorites', (req, res) => {
     })
   });
 
-  app.delete('/favorites', (req, res) => {
-    db.favorites.destroy
-      console.log(req.params.id)
-  })
+  // app.delete('/favorites/:id', (req, res) => {
+  //   // db.favorites.destroy
+  //     console.log(req.params.id)
+  // })
+
+  app.delete('/favorites/:id', function(req, res){
+    console.log(req.params.id)
+    db.favorites.destroy({where: {
+      id: req.params.id
+    }})
+    .then(deletedAnime=>{
+      console.log(deletedAnime)
+      res.redirect('/favorites')
+    })
+  });
+  
+//   app.update('//:id', function(req, res){
+//     console.log(req.params.id)
+//     db.favorites.destroy({where: {
+//       id: req.params.id
+//     }})
+//     .then(deletedAnime=>{
+//       console.log(deletedAnime)
+//       res.redirect('/favorites')
+//     })
+//   });
+
+
+//   db.favorites.update({
+//     lastName: 'Taco'
+//   }, {
+//     where: {
+//       firstName: 'Brian'
+//     }
+// }).then(numRowsChanged=>{
+//     console.log(numRowsChanged)
+// });
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {
