@@ -126,27 +126,27 @@ app.post('/favorites', (req, res) => {
     })
   });
   
-//   app.update('//:id', function(req, res){
+//  app.update('//:id', function(req, res){
 //     console.log(req.params.id)
-//     db.favorites.destroy({where: {
+//    db.favorites.destroy({where: {
 //       id: req.params.id
 //     }})
-//     .then(deletedAnime=>{
+//      .then(deletedAnime=>{
 //       console.log(deletedAnime)
 //       res.redirect('/favorites')
-//     })
+//   })
 //   });
 
 
-//   db.favorites.update({
-//     lastName: 'Taco'
-//   }, {
-//     where: {
-//       firstName: 'Brian'
-//     }
+// db.favorites.update({
+// lastName: 'Taco'
+//  }, {
+// where: {
+//   firstName: 'Brian'
+//  }
 // }).then(numRowsChanged=>{
-//     console.log(numRowsChanged)
-// });
+//    console.log(numRowsChanged)
+//   });
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {
