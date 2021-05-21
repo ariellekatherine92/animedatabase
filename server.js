@@ -112,12 +112,12 @@ app.post('/favorites',isLoggedIn, (req, res) => {
 
   app.put("/", isLoggedIn, (req,res)=>{
     db.anime.update({
-      plot: req.body.plot
+      genre: req.body.genre
     }, {where: {
       id: req.body.id
     }})
     .then(deletedAnime=>{
-      console.log(req.body.plot)
+      console.log(req.body.genre)
       res.redirect('/animedetails')
     }).catch(err=>console.log(err))
     console.log(req.body)

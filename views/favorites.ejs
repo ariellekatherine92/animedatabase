@@ -7,9 +7,9 @@
         <form method="POST" action="/favorites/<%= favorites[key].id %>?_method=DELETE">
             <input type="submit" value="Delete">
         </form>
-        <p><%= favorites[key].plot %></p>
+        <p><%= favorites[key].genre %></p>
         <form method="POST" action="/favorites/<%= favorites[key].id %>?_method=PUT">
-            <input type="text" name="plot">
+            <input type="text" name="genre">
             <input type="submit" value="Delete">
         </form>
     <% } %>
