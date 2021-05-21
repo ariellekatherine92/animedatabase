@@ -45,7 +45,7 @@ app.use((req, res, next) => {
 
 app.use('/auth', require('./controllers/auth'));
 
-app.get('/', (req, res) => {
+app.get('/',isLoggedIn, (req, res) => {
   axios.get('https://ghibliapi.herokuapp.com/films')
     .then(function(response) {
       const promises = [];
@@ -75,7 +75,7 @@ app.get('/', (req, res) => {
 
 
 
-app.get('/anime/:id', (req, res) => {
+app.get('/anime/:id',isLoggedIn, (req, res) => {
   axios.get(`http://www.omdbapi.com/?apikey=${process.env.API_KEY}&i=${req.params.id}`)
     .then(resp => {
       console.log(resp.data);
@@ -86,7 +86,7 @@ app.get('/anime/:id', (req, res) => {
     });
 });
 
-app.post('/favorites', (req, res) => {
+app.post('/favorites',isLoggedIn, (req, res) => {
   console.log(req.body)
   db.favorites.create({
     genre: req.body.genre,
@@ -102,7 +102,7 @@ app.post('/favorites', (req, res) => {
   // res.send('this should work')
   })
 
-  app.get('/favorites', (req, res) => {
+  app.get('/favorites', isLoggedIn,(req, res) => {
     db.favorites.findAll().then((results) => {
       // res.redirect
       // console.log(results)
@@ -115,7 +115,7 @@ app.post('/favorites', (req, res) => {
   //     console.log(req.params.id)
   // })
 
-  app.delete('/favorites/:id', function(req, res){
+  app.delete('/favorites/:id', isLoggedIn, function(req, res){
     console.log(req.params.id)
     db.favorites.destroy({where: {
       id: req.params.id
