@@ -110,6 +110,20 @@ app.post('/favorites',isLoggedIn, (req, res) => {
     })
   });
 
+  app.put("/", isLoggedIn, (req,res)=>{
+    db.anime.update({
+      plot: req.body.plot
+    }, {where: {
+      id: req.body.id
+    }})
+    .then(deletedAnime=>{
+      console.log(req.body.plot)
+      res.redirect('/animedetails')
+    }).catch(err=>console.log(err))
+    console.log(req.body)
+  })
+
+
   // app.delete('/favorites/:id', (req, res) => {
   //   // db.favorites.destroy
   //     console.log(req.params.id)
@@ -126,27 +140,7 @@ app.post('/favorites',isLoggedIn, (req, res) => {
     })
   });
   
-//  app.update('//:id', function(req, res){
-//     console.log(req.params.id)
-//    db.favorites.destroy({where: {
-//       id: req.params.id
-//     }})
-//      .then(deletedAnime=>{
-//       console.log(deletedAnime)
-//       res.redirect('/favorites')
-//   })
-//   });
 
-
-// db.favorites.update({
-// lastName: 'Taco'
-//  }, {
-// where: {
-//   firstName: 'Brian'
-//  }
-// }).then(numRowsChanged=>{
-//    console.log(numRowsChanged)
-//   });
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {
