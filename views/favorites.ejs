@@ -1,17 +1,15 @@
 <h2>A list of all your favorite animes</h2>
 
-
 <ul>
     <% for (key in favorites) { %>
-        <li><%= favorites[key].name %></li>
+        <li><%= favorites[key].title %></li>
         <form method="POST" action="/favorites/<%= favorites[key].id %>?_method=DELETE">
             <input type="submit" value="Delete">
         </form>
-        <p><%= favorites[key].genre %></p>
-        <form method="POST" action="/favorites/<%= favorites[key].id %>?_method=PUT">
-            <input type="text" name="genre">
-            <input type="submit" value="Delete">
+        <form method="POST" action="/favorites/?_method=PUT">
+            <input type="text" name="id"value= "<%= favorites[key].id %>" hidden>
+            <input type="text" name="title">
+            <input type="submit" value="Update">
         </form>
     <% } %>
 </ul>
-

@@ -12,8 +12,8 @@ const STRATEGY = new LocalStrategy({
                 where: { email }
             });
 
-            if (!user || !user.validPassword(password)) { 
-                cb(null, false);     // if no user or invalid password, return false
+            if (!user) { 
+                cb(null, false); 
             } else {
                 cb(null, user);
             }

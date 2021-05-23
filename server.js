@@ -13,7 +13,6 @@ const SECRET_SESSION = process.env.SECRET_SESSION;
 console.log(SECRET_SESSION);
 app.set('view engine', 'ejs');
 
-
 const methodOverride = require('method-override');
 app.use(methodOverride('_method'));
 
@@ -39,13 +38,9 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.get('/', (req, res) => {
-//   res.render('index');
-// });
-
 app.use('/auth', require('./controllers/auth'));
 
-app.get('/',isLoggedIn, (req, res) => {
+app.get('/', isLoggedIn, (req, res) => {
   axios.get('https://ghibliapi.herokuapp.com/films')
     .then(function(response) {
       const promises = [];
@@ -73,8 +68,6 @@ app.get('/',isLoggedIn, (req, res) => {
     });    
 });
 
-
-
 app.get('/anime/:id',isLoggedIn, (req, res) => {
   axios.get(`http://www.omdbapi.com/?apikey=${process.env.API_KEY}&i=${req.params.id}`)
     .then(resp => {
@@ -86,39 +79,36 @@ app.get('/anime/:id',isLoggedIn, (req, res) => {
     });
 });
 
-app.post('/favorites',isLoggedIn, (req, res) => {
-  console.log(req.body)
+app.post('/favorites', isLoggedIn, (req, res) => {
+  console.log('HELLO', req.body);
   db.favorites.create({
-    genre: req.body.genre,
-    ratings: req.body.rated,
-    name: req.body.title
+    title: req.body.title,
   })
   .then(results => {
-    res.redirect('/favorites')
+    res.redirect('/favorites');
   })
   .catch(error => {
     console.error(error);
-  })
-  // res.send('this should work')
-  })
+  });
+});
 
   app.get('/favorites', isLoggedIn,(req, res) => {
     db.favorites.findAll().then((results) => {
       // res.redirect
       // console.log(results)
-      res.render('favorites', {favorites: results})
+      res.render('favorites', { favorites: results })
     })
   });
 
-  app.put("/", isLoggedIn, (req,res)=>{
-    db.anime.update({
-      genre: req.body.genre
+  app.put("/favorites", isLoggedIn, (req,res)=>{
+    db.favorites.update({
+      title: req.body.title
     }, {where: {
       id: req.body.id
     }})
     .then(deletedAnime=>{
-      console.log(req.body.genre)
-      res.redirect('/animedetails')
+      console.log(req.body.title)
+      res.redirect('/favorites')
     }).catch(err=>console.log(err))
     console.log(req.body)
   })
@@ -140,8 +130,6 @@ app.post('/favorites',isLoggedIn, (req, res) => {
     })
   });
   
-
-
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {
   console.log(`🎧 You're listening to the smooth sounds of port ${PORT} 🎧`);
