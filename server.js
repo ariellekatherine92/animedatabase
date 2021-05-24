@@ -114,11 +114,6 @@ app.post('/favorites', isLoggedIn, (req, res) => {
   })
 
 
-  // app.delete('/favorites/:id', (req, res) => {
-  //   // db.favorites.destroy
-  //     console.log(req.params.id)
-  // })
-
   app.delete('/favorites/:id', isLoggedIn, function(req, res){
     console.log(req.params.id)
     db.favorites.destroy({where: {

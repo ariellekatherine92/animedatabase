@@ -14,6 +14,9 @@ Once the image is clicked a screen with the movie's description and rating shoul
 If "Add to Favorites" is clicked it will automatically take you to the favorites list that you created and allow you to update the selection with your own notes/updated title if you so choose.
 <img src="https://github.com/ariellekatherine92/animedatabase/blob/main/images/image5.png?raw=true">
 
+During this project I used two databases to create get the information about the movie as well as gain the images for the movies. I would like to in the future maybe add a more comprehensive anime database that includes links for viewing/streaming.
+<img src="https://github.com/ariellekatherine92/animedatabase/blob/main/images/image6.png?raw=true">
+
 **Future Considerations:
 
 I would love to add a couple more features to this app such as a comment section as well as a rating system where each user can rate the movie based on how they felt about it. I tried to keep this app as simple as possible for the criteria of this project.
