@@ -1,4 +1,6 @@
 For this project I decided upon making an app to save a list of your favorite Ghilbi movies and being able to update/make notes on such lists as long as they are in your favorites list.
+The final app can be found here:
+https://ghilbi-database.herokuapp.com/
 
 The technologies used to create this app include axios, express, ejs, javascript, css, bcrypt, and html. If you attempt to fork and clone this repository you will need to run an install of the technologies before you can add/build anything to this application.
 
