@@ -32,9 +32,9 @@ app.use(passport.initialize());      // Initialize passport
 app.use(passport.session());         // Add a session
 
 app.use((req, res, next) => {
-  console.log(res.locals);
   res.locals.alerts = req.flash();
   res.locals.currentUser = req.user;
+  res.locals.url = req.originalUrl;
   next();
 });
 

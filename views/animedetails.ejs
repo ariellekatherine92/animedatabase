@@ -1,38 +1,24 @@
 <div class="detail-wrapper">
-    <div>
-        <img src=<%=details.Poster%> alt=<%=details.Title%> />
+    <div class="title">
+        <h3><%=details.Title%></h3>
     </div>
-    <div>
-        <table>
-            <tbody>
-                <tr>
-                    <td>Title</td>
-                    <td><%=details.Title%></td>
-                </tr>
-                <tr>
-                    <td>Year</td>
-                    <td><%=details.Year%></td>
-                </tr>
-                <tr>
-                    <td>Plot</td>
-                    <td><%=details.Plot%></td>
-                </tr>
-                <tr>
-                    <td>Rated</td>
-                    <td><%=details.Rated%></td>
-                </tr>
-                <tr>
-                    <td>Released</td>
-                    <td><%=details.Released%></td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="info-container">
+        <div class="poster-wrapper">
+            <img src=<%=details.Poster%> alt=<%=details.Title%> />
+        </div>
+        <div class="info-wrapper">
+            <p><%=details.Plot%></p>
+            <span class="lighter">Released <%=details.Released%></span>
+            <br/>
+            <span class="lighter">Rated <%=details.Rated%></span>
+
             <form method="POST" action="/favorites">
-              <input hidden type="text" name="title" value="<%= details.Title %>">
-              <input hidden type="text" name="rated" value="<%= details.Rated %>">
-              <input hidden type="text" name="genre" value="<%= details.Genre %>">
-              <button type="submit">Add to Favorites</button>
-            </form> 
-           
+                <input hidden type="text" name="title" value="<%= details.Title %>">
+                <input hidden type="text" name="rated" value="<%= details.Rated %>">
+                <input hidden type="text" name="genre" value="<%= details.Genre %>">
+                <button class="favorite-button" type="submit">Add to Favorites</button>
+            </form>  
+        </div>
     </div>
+    
 </div>
